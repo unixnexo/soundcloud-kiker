@@ -42,23 +42,23 @@ namespace soundcloud_kiker.Controllers
             var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(tempDir);
 
-            foreach (var url in request.TrackUrls)
-            {
-                var startInfo = new ProcessStartInfo
-                {
-                    FileName = "yt-dlp",
-                    Arguments = $"-x --audio-format mp3 -o \"{tempDir}/%(title)s.%(ext)s\" \"{url}\"",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+            var urlListPath = Path.Combine(tempDir, "urls.txt");
+            await System.IO.File.WriteAllLinesAsync(urlListPath, request.TrackUrls);
 
-                using var process = Process.Start(startInfo);
-                if (process != null)
-                {
-                    await process.WaitForExitAsync();
-                }
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "yt-dlp",
+                Arguments = $"-x --audio-format mp3 -o \"{tempDir}/%(title)s.%(ext)s\" -a \"{urlListPath}\"",
+                UseShellExecute = false,
+                RedirectStandardOutput = false, // No redirection = no buffer issue
+                RedirectStandardError = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(startInfo);
+            if (process != null)
+            {
+                await process.WaitForExitAsync();
             }
 
             var zipPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.zip");
