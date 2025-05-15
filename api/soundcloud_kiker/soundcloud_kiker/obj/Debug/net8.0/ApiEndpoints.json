@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "soundcloud_kiker.Controllers.PlaylistController",
+    "Method": "GetPlaylist",
+    "RelativePath": "api/Playlist",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "url",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
