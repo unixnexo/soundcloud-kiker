@@ -39,7 +39,8 @@ namespace soundcloud_kiker.Services
                 var uploader = entry.TryGetProperty("uploader", out var u) ? u.GetString() : "Unknown";
 
                 // Attempt to build a rough URL (yt-dlp doesn't return URL for playlists by default)
-                var url = $"https://soundcloud.com/{uploader.ToLower().Replace(" ", "")}/{id}";
+                //var url = $"https://soundcloud.com/{uploader.ToLower().Replace(" ", "")}/{id}";
+                var url = entry.GetProperty("webpage_url").GetString();
 
                 // Get the largest thumbnail if available
                 string thumbnail = null;

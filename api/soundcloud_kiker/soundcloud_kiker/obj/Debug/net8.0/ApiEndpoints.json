@@ -14,5 +14,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "soundcloud_kiker.Controllers.PlaylistController",
+    "Method": "DownloadPlaylist",
+    "RelativePath": "api/Playlist/download",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "soundcloud_kiker.Models.DTOs.DownloadRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
