@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("soundcloud_kiker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+091b7d77071d722c23c7e0dcb4b7950fa9edd307")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+593490b50c15d8516aed82ac501931e820349bfa")]
 [assembly: System.Reflection.AssemblyProductAttribute("soundcloud_kiker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("soundcloud_kiker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

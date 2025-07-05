@@ -32,12 +32,12 @@ namespace soundcloud_kiker.Services
 
             var tracks = new List<PlaylistTrack>();
 
-            var collection = root.GetProperty("tracks");
+            if (!root.TryGetProperty("tracks", out var collection) || collection.ValueKind != JsonValueKind.Array)
+                return tracks;
 
             foreach (var track in collection.EnumerateArray())
             {
                 string id = track.TryGetProperty("id", out var idProp) ? idProp.GetInt64().ToString() : "Unknown";
-
                 string title = track.TryGetProperty("title", out var t) ? t.GetString() : "Unknown";
 
                 string uploader = "Unknown";
@@ -47,8 +47,28 @@ namespace soundcloud_kiker.Services
                 }
 
                 string url = track.TryGetProperty("permalink_url", out var w) ? w.GetString() : null;
-
                 string thumbnail = track.TryGetProperty("artwork_url", out var art) ? art.GetString() : null;
+
+                // Find the best progressive stream URL
+                string streamUrl = null;
+                if (track.TryGetProperty("media", out var media) &&
+                    media.TryGetProperty("transcodings", out var transcodings) &&
+                    transcodings.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var transcoding in transcodings.EnumerateArray())
+                    {
+                        if (transcoding.TryGetProperty("format", out var format) &&
+                            format.TryGetProperty("protocol", out var protocol) &&
+                            protocol.GetString() == "progressive")
+                        {
+                            if (transcoding.TryGetProperty("url", out var transcodingUrl))
+                            {
+                                streamUrl = $"{transcodingUrl.GetString()}?client_id={_clientId}";
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 tracks.Add(new PlaylistTrack
                 {
@@ -56,12 +76,14 @@ namespace soundcloud_kiker.Services
                     Title = title,
                     Artist = uploader,
                     Url = url,
-                    Thumbnail = thumbnail
+                    Thumbnail = thumbnail,
+                    StreamUrl = streamUrl
                 });
             }
 
             return tracks;
         }
+
 
 
     }
