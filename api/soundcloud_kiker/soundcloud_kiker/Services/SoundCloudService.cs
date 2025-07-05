@@ -7,48 +7,48 @@ namespace soundcloud_kiker.Services
 {
     public class SoundCloudService
     {
+        private readonly HttpClient _httpClient;
+        private readonly string _clientId = "FvkDBx5usilkOwhGPFsG97512Dhw7LRx";
+
+        public SoundCloudService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         public async Task<List<PlaylistTrack>> GetPlaylistTracksAsync(string playlistUrl)
         {
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "yt-dlp",
-                Arguments = $"-J \"{playlistUrl}\"",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
+            var resolveUrl = $"https://api-v2.soundcloud.com/resolve?url={playlistUrl}&client_id={_clientId}";
 
-            using var process = new Process { StartInfo = startInfo };
-            process.Start();
+            var response = await _httpClient.GetAsync(resolveUrl);
+            response.EnsureSuccessStatusCode();
 
-            string output = await process.StandardOutput.ReadToEndAsync();
-            await process.WaitForExitAsync();
+            var json = await response.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(json);
 
-            using var doc = JsonDocument.Parse(output);
             var root = doc.RootElement;
+
+            if (root.GetProperty("kind").GetString() != "playlist")
+                throw new Exception("URL is not a playlist.");
 
             var tracks = new List<PlaylistTrack>();
 
-            if (!root.TryGetProperty("entries", out var entries))
-                throw new Exception("Invalid playlist structure.");
+            var collection = root.GetProperty("tracks");
 
-            foreach (var entry in entries.EnumerateArray())
+            foreach (var track in collection.EnumerateArray())
             {
-                var id = entry.GetProperty("id").ToString();
-                var title = entry.TryGetProperty("title", out var t) ? t.GetString() : "Unknown";
-                var uploader = entry.TryGetProperty("uploader", out var u) ? u.GetString() : "Unknown";
+                string id = track.TryGetProperty("id", out var idProp) ? idProp.GetInt64().ToString() : "Unknown";
 
-                // Attempt to build a rough URL (yt-dlp doesn't return URL for playlists by default)
-                //var url = $"https://soundcloud.com/{uploader.ToLower().Replace(" ", "")}/{id}";
-                var url = entry.GetProperty("webpage_url").GetString();
+                string title = track.TryGetProperty("title", out var t) ? t.GetString() : "Unknown";
 
-                // Get the largest thumbnail if available
-                string thumbnail = null;
-                if (entry.TryGetProperty("thumbnails", out var thumbs) && thumbs.GetArrayLength() > 0)
+                string uploader = "Unknown";
+                if (track.TryGetProperty("user", out var user) && user.TryGetProperty("username", out var username))
                 {
-                    var largest = thumbs[thumbs.GetArrayLength() - 1]; // usually highest res is last
-                    thumbnail = largest.GetProperty("url").GetString();
+                    uploader = username.GetString();
                 }
+
+                string url = track.TryGetProperty("permalink_url", out var w) ? w.GetString() : null;
+
+                string thumbnail = track.TryGetProperty("artwork_url", out var art) ? art.GetString() : null;
 
                 tracks.Add(new PlaylistTrack
                 {

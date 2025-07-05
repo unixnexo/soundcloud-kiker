@@ -15,7 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
     sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
-builder.Services.AddScoped<SoundCloudService>();
+builder.Services.AddHttpClient<SoundCloudService>();
+
 
 var app = builder.Build();
 

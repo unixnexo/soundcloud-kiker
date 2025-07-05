@@ -141,3 +141,7 @@ D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kike
 D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\obj\Debug\net8.0\soundcloud_kiker.sourcelink.json
+D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\obj\Debug\net8.0\rpswa.dswa.cache.json
+D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\obj\Debug\net8.0\rjimswa.dswa.cache.json
+D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+D:\design and program development\soundcloud kiker 15.5.2025\api\soundcloud_kiker\soundcloud_kiker\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
