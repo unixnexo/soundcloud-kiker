@@ -7,6 +7,7 @@ namespace soundcloud_kiker.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<PlaylistTrack> PlaylistTracks { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<Track> Tracks { get; set; }
     }
 }

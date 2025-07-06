@@ -13,17 +13,22 @@ namespace soundcloud_kiker.Controllers
     {
         private readonly AppDbContext _context;
         private readonly SoundCloudService _scService;
+        private readonly DownloadService _downloadService;
 
-        public PlaylistController(AppDbContext context, SoundCloudService scService)
+        public PlaylistController(AppDbContext context, SoundCloudService scService, DownloadService downloadService)
         {
             _context = context;
             _scService = scService;
+            _downloadService = downloadService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPlaylist([FromQuery] string url)
+        [HttpGet("playlist")]
+        public async Task<IActionResult> GetPlaylistTracks([FromQuery] string url, [FromQuery] bool onlyNew = false)
         {
-            var tracks = await _scService.GetPlaylistTracksAsync(url);
+            if (string.IsNullOrWhiteSpace(url))
+                return BadRequest("Playlist URL is required.");
+
+            var tracks = await _scService.GetPlaylistTracksAsync(url, onlyNew);
             return Ok(tracks);
         }
 
@@ -34,35 +39,7 @@ namespace soundcloud_kiker.Controllers
             if (request.TrackUrls == null || !request.TrackUrls.Any())
                 return BadRequest("Track URLs required.");
 
-            var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-            Directory.CreateDirectory(tempDir);
-
-            var urlListPath = Path.Combine(tempDir, "urls.txt");
-            await System.IO.File.WriteAllLinesAsync(urlListPath, request.TrackUrls);
-
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "yt-dlp",
-                Arguments = $"-x --audio-format mp3 -o \"{tempDir}/%(title)s.%(ext)s\" -a \"{urlListPath}\"",
-                UseShellExecute = false,
-                RedirectStandardOutput = false, // No redirection = no buffer issue
-                RedirectStandardError = false,
-                CreateNoWindow = true
-            };
-
-            using var process = Process.Start(startInfo);
-            if (process != null)
-            {
-                await process.WaitForExitAsync();
-            }
-
-            var zipPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.zip");
-            ZipFile.CreateFromDirectory(tempDir, zipPath);
-            var zipBytes = await System.IO.File.ReadAllBytesAsync(zipPath);
-
-            Directory.Delete(tempDir, true);
-            System.IO.File.Delete(zipPath);
-
+            var zipBytes = await _scService.DownloadTracksAsZipAsync(request.TrackUrls);
             return File(zipBytes, "application/zip", "playlist.zip");
         }
 

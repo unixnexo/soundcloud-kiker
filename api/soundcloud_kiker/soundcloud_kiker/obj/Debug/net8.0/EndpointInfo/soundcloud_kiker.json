@@ -69,6 +69,10 @@
               "type": "string"
             },
             "nullable": true
+          },
+          "playlistName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

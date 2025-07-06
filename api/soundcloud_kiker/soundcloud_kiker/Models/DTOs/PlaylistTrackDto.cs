@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace soundcloud_kiker.Models
+﻿namespace soundcloud_kiker.Models.DTOs
 {
-    public class PlaylistTrack
+    public class PlaylistTrackDto
     {
-        [Key]
         public string SoundCloudId { get; set; }
         public string Title { get; set; }
         public string Artist { get; set; }

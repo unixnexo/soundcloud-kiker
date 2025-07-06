@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\soundcloud_kiker\\Migrations\\20250706102028_fuck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:soundcloud_kiker\\Migrations\\20250706102028_fuck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DB0CDC48-F8FF-4CC9-BE56-29FB8457DF83}|soundcloud_kiker\\soundcloud_kiker.csproj|d:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\soundcloud_kiker\\services\\soundcloudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DB0CDC48-F8FF-4CC9-BE56-29FB8457DF83}|soundcloud_kiker\\soundcloud_kiker.csproj|solutionrelative:soundcloud_kiker\\services\\soundcloudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "20250706102028_fuck.cs",
+              "DocumentMoniker": "D:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\soundcloud_kiker\\Migrations\\20250706102028_fuck.cs",
+              "RelativeDocumentMoniker": "soundcloud_kiker\\Migrations\\20250706102028_fuck.cs",
+              "ToolTip": "D:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\soundcloud_kiker\\Migrations\\20250706102028_fuck.cs",
+              "RelativeToolTip": "soundcloud_kiker\\Migrations\\20250706102028_fuck.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-06T10:20:28.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "SoundCloudService.cs",
               "DocumentMoniker": "D:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\soundcloud_kiker\\Services\\SoundCloudService.cs",
               "RelativeDocumentMoniker": "soundcloud_kiker\\Services\\SoundCloudService.cs",
               "ToolTip": "D:\\design and program development\\soundcloud kiker 15.5.2025\\api\\soundcloud_kiker\\soundcloud_kiker\\Services\\SoundCloudService.cs",
               "RelativeToolTip": "soundcloud_kiker\\Services\\SoundCloudService.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAswBEAAABZAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAkwDgAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T19:21:33.06Z",
+              "WhenOpened": "2025-07-06T10:15:43.113Z",
               "EditorCaption": ""
             }
           ]
