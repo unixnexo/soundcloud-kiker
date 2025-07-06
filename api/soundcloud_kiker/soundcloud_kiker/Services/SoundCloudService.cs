@@ -12,7 +12,6 @@ namespace soundcloud_kiker.Services
     public class SoundCloudService
     {
         private readonly HttpClient _httpClient;
-        //private readonly string _clientId = "FvkDBx5usilkOwhGPFsG97512Dhw7LRx";
         private readonly string _clientId;
         private readonly AppDbContext _db;
 
@@ -44,14 +43,26 @@ namespace soundcloud_kiker.Services
 
             foreach (var track in collection.EnumerateArray())
             {
+                JsonElement trackFull = track;
+
+                if (!track.TryGetProperty("media", out _) || !track.GetProperty("media").TryGetProperty("transcodings", out var _))
+                {
+                    // Fetch full track info
+                    var trackId = track.GetProperty("id").GetInt64();
+                    var trackResp = await _httpClient.GetAsync($"https://api-v2.soundcloud.com/tracks/{trackId}?client_id={_clientId}");
+                    trackResp.EnsureSuccessStatusCode();
+                    var trackJson = await trackResp.Content.ReadAsStringAsync();
+                    trackFull = JsonDocument.Parse(trackJson).RootElement;
+                }
+
                 var dto = new PlaylistTrackDto
                 {
-                    SoundCloudId = track.GetProperty("id").GetInt64().ToString(),
-                    Title = track.GetProperty("title").GetString(),
-                    Artist = track.GetProperty("user").GetProperty("username").GetString(),
-                    Url = track.GetProperty("permalink_url").GetString(),
-                    Thumbnail = track.TryGetProperty("artwork_url", out var art) ? art.GetString() : null,
-                    StreamUrl = GetProgressiveStreamUrl(track)
+                    SoundCloudId = trackFull.GetProperty("id").GetInt64().ToString(),
+                    Title = trackFull.GetProperty("title").GetString(),
+                    Artist = trackFull.GetProperty("user").GetProperty("username").GetString(),
+                    Url = trackFull.GetProperty("permalink_url").GetString(),
+                    Thumbnail = trackFull.TryGetProperty("artwork_url", out var art) ? art.GetString() : null,
+                    StreamUrl = GetProgressiveStreamUrl(trackFull)
                 };
 
                 tracks.Add(dto);

@@ -1,22 +1,6 @@
 [
   {
     "ContainingType": "soundcloud_kiker.Controllers.PlaylistController",
-    "Method": "GetPlaylist",
-    "RelativePath": "api/Playlist",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "url",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "soundcloud_kiker.Controllers.PlaylistController",
     "Method": "DownloadPlaylist",
     "RelativePath": "api/Playlist/download",
     "HttpMethod": "POST",
@@ -27,6 +11,27 @@
         "Name": "request",
         "Type": "soundcloud_kiker.Models.DTOs.DownloadRequest",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "soundcloud_kiker.Controllers.PlaylistController",
+    "Method": "GetPlaylistTracks",
+    "RelativePath": "api/Playlist/playlist",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "url",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "onlyNew",
+        "Type": "System.Boolean",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
